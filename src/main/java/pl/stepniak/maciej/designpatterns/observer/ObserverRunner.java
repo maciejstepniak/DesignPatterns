@@ -15,9 +15,9 @@ public class ObserverRunner {
         TemperatureObserver fahrenheitObserver = new FahrenheitObserver();
 
         TemperatureProvider reader = new DS1820Reader();
-        reader.addTemperatureObserver(kelvinObserver);
         reader.addTemperatureObserver(celsiusObserver);
         reader.addTemperatureObserver(fahrenheitObserver);
+        reader.addTemperatureObserver(kelvinObserver);
 
         List<Measurement> measurements = reader.read();
         System.out.println("\nOdczytana wartość:");

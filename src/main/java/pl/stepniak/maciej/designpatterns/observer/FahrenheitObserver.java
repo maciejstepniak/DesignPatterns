@@ -2,7 +2,6 @@ package pl.stepniak.maciej.designpatterns.observer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -14,17 +13,14 @@ public class FahrenheitObserver implements TemperatureObserver {
 
     @Override
     public void update(List<Measurement> measurements) {
-        this.measurements = measurements.stream().map(m -> new Measurement(m)).collect(Collectors.toList());
-        this.measurements.forEach(m -> m.setUnit(TemperatureUnitEnum.F));
-        this.measurements.forEach((m) -> {
-            float celsiusValue = m.getValue();
-            m.setValue(convertCelsiusToFahrenheit(celsiusValue));
-        });
-        this.printValues(this.measurements);
-
+        this.measurements = createLocalCopy(measurements);
+        changeUnit(this.measurements, TemperatureUnitEnum.F);
+        printValues(this.measurements);
     }
 
-    private float convertCelsiusToFahrenheit(float value) {
-        return (value * 1.8f) + 32;
+    @Override
+    public float convert(float value) {
+        float result = (value * 1.8f) + 32;
+        return (float) (Math.round(result * 100.0) / 100.0);
     }
 }

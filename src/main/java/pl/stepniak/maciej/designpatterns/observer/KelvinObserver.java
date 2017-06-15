@@ -1,7 +1,7 @@
 package pl.stepniak.maciej.designpatterns.observer;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -9,20 +9,18 @@ import java.util.stream.Collectors;
  */
 public class KelvinObserver implements TemperatureObserver {
 
-    private List<Measurement> measurements;
+    private List<Measurement> measurements = new ArrayList<>();
 
     @Override
     public void update(List<Measurement> measurements) {
-        this.measurements = measurements.stream().map(m -> new Measurement(m)).collect(Collectors.toList());
-        this.measurements.forEach(m -> m.setUnit(TemperatureUnitEnum.K));
-        this.measurements.forEach((m) -> {
-            float celsiusValue = m.getValue();
-            m.setValue(convertCelsiusToKelvin(celsiusValue));
-        });
-        this.printValues(this.measurements);
+        this.measurements = createLocalCopy(measurements);
+        changeUnit(this.measurements, TemperatureUnitEnum.K);
+        printValues(this.measurements);
     }
 
-    private float convertCelsiusToKelvin(float value) {
-        return value + 273.15f;
+    @Override
+    public float convert(float value) {
+        float result = value + 273.15f;
+        return (float) (Math.round(result * 100.0) / 100.0);
     }
 }

@@ -38,23 +38,19 @@ class Measurement {
 
         StringBuilder sb = new StringBuilder(formattedDateTime);
         sb.append(" (").append(this.sensorId).append(")").append(": ").append(this.value).append(" ");
+        appendUnit(sb);
+        return sb.toString();
+    }
+
+    private void appendUnit(StringBuilder sb) {
         switch (this.unit) {
-            case C: {
-                sb.append(DEGREE).append("C");
-                break;
-            }
             case K: {
                 sb.append("K");
                 break;
             }
-            case F: {
-                sb.append(DEGREE).append("F");
-                break;
-            }
             default: {
-                sb.append(DEGREE).append("C");
+                sb.append(DEGREE).append(this.unit);
             }
         }
-        return sb.toString();
     }
 }
