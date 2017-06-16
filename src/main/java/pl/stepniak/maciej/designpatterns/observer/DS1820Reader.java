@@ -73,7 +73,8 @@ public class DS1820Reader implements TemperatureProvider {
                 if (errorOccured(inputLine)) {
                     System.err.println("Błąd odczytu temperatury z czujnika DS1820.");
                 } else {
-                    measurements.add(prepareMeasurementObject(inputLine));
+                    Measurement measurement = prepareMeasurementObject(inputLine);
+                    measurements.add(measurement);
                 }
             }
         } catch (IOException ex) {
@@ -88,10 +89,15 @@ public class DS1820Reader implements TemperatureProvider {
 
     private Measurement prepareMeasurementObject(String inputLine) throws NumberFormatException {
         Measurement measurement = new Measurement(LocalDateTime.now());
-        String[] splitedLine = inputLine.split(";");
-        measurement.setSensorId(splitedLine[0]);
-        measurement.setValue(Float.parseFloat(splitedLine[1]));
         measurement.setUnit(TemperatureUnitEnum.C);
+        String[] splitedLine = inputLine.split(";");
+        try {
+            measurement.setSensorId(splitedLine[0]);
+            measurement.setValue(Float.parseFloat(splitedLine[1]));
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.err.println("Nieparawidłowy format danych wejściowych.");
+            System.exit(0);
+        }
         return measurement;
     }
 }
