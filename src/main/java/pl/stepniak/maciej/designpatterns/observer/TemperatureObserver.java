@@ -10,15 +10,6 @@ import java.util.stream.Collectors;
 public interface TemperatureObserver {
 
     /**
-     * Default method prints the list of measurements.
-     *
-     * @param measurements List&lt;Measurement&gt;
-     */
-    default public void printValues(List<Measurement> measurements) {
-        measurements.stream().forEach(System.out::println);
-    }
-
-    /**
      * Default method creates local copy (values, not references) of
      * measurements list. (Deep copy)
      *

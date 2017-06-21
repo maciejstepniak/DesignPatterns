@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Maciej Stępniak &lt;maciek.stepniak@gmail.com&gt;
  */
-public class FahrenheitObserver implements TemperatureObserver {
+public class FahrenheitObserver implements TemperatureObserver, TemperaturePrinter {
 
     private List<Measurement> measurements = new ArrayList<>();
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  *
  * @author Maciej Stępniak &lt;maciek.stepniak@gmail.com&gt;
  */
-public class CelsiusObserver implements TemperatureObserver {
+public class CelsiusObserver implements TemperatureObserver, TemperaturePrinter {
 
     private List<Measurement> measurements = new ArrayList<>();
 
